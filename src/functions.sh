@@ -28,7 +28,7 @@ command_not_found_handle()
         shift
         "${@}"
     else
-        _r9e_print_message "bash: ${1}: command not found"
+        _r9e_print_message '%s: %s: command not found' "${0}" "${1}"
         return 127
     fi
 }
