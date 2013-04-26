@@ -58,7 +58,7 @@ is no login shell (see the
 [reference manual](http://www.gnu.org/software/bash/manual/html_node/Bash-Startup-Files.html)
 for details), your `~/.bash_profile` (or `~/.profile`) should source the
 `~/.bashrc`. Most Linux distributions automatically install an appropriate
-`~/bash_profile` (or `~/.profile` on Debian) if you create a new user. If your
+`~/.bash_profile` (or `~/.profile` on Debian) if you create a new user. If your
 `~/.bash_profile` does not source the bashrc, simply insert something like the
 following into this file:
 
