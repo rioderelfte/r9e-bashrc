@@ -46,11 +46,9 @@ _r9e_install_prompt_command()
 {
     _r9e_profiling_function_start
 
-    # TODO: Preserve the old prompt command. This can not simply be done by
-    # appending our prompt command to PROMPT_COMMAND, since than our prompt
-    # command would end up in the variable multiple times when the bashrc alias
-    # is used.
-    PROMPT_COMMAND="$(_r9e_print_prompt_command)"
+    if [[ "${PROMPT_COMMAND}" != *_r9e_prompt_command* ]]; then
+        PROMPT_COMMAND="$(_r9e_print_prompt_command) ${PROMPT_COMMAND}"
+    fi
 
     _r9e_profiling_function_end
 }
