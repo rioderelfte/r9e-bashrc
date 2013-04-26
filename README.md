@@ -114,7 +114,7 @@ Also every file with the file extension `.sh` from the following directories is
 sourced:
 
 * `/etc/r9e-bashrc.d`
-* `~/bashrc.d`
+* `~/.bashrc.d`
 
 If these directories contain subdirectories (or symbolic links to directories)
 named `*.d`, files from these directories will be sourced recursively.
