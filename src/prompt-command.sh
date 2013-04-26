@@ -24,14 +24,21 @@ _r9e_prompt_command()
     history -a
 
     _r9e_export_prompt "${return_code}"
+
+    unset _R9E_TMP_RETURN_CODE
+
+    return "${return_code}"
 }
 
 _r9e_print_prompt_command()
 {
-    cat <<"EOF"
+    tr -ds '\n' ' ' <<"EOF"
 _R9E_TMP_RETURN_CODE="${?}";
-type -t _r9e_prompt_command >/dev/zero && _r9e_prompt_command "${_R9E_TMP_RETURN_CODE}";
-unset _R9E_TMP_RETURN_CODE;
+if type -t _r9e_prompt_command >/dev/zero; then
+    _r9e_prompt_command "${_R9E_TMP_RETURN_CODE}";
+else
+    unset _R9E_TMP_RETURN_CODE;
+fi;
 EOF
 }
 
