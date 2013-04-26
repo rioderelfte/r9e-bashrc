@@ -52,7 +52,7 @@ _r9e_source_directory()
 # Prints the hostname up to the first dot (like \h in bash prompting).
 _r9e_short_hostname()
 {
-    hostname | sed 's|\..*$||'
+    echo "${HOSTNAME%%.*}"
 }
 
 _r9e_is_executable()
