@@ -21,7 +21,7 @@ _r9e_prepend_to_path()
     local directory="${1}"
 
     # Normalize directory by removing a trailing /.
-    directory="$(echo "${directory}" | sed 's|/$||')"
+    directory="${directory%/}"
 
     if [ ! -d "${directory}" ]; then
         return
