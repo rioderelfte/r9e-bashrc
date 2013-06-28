@@ -62,12 +62,11 @@ _r9e_prepare_prompt_single_function()
     local prompt_function="_r9e_prompt_function_${command}"
 
     local result
-    if result="$(${prompt_function} 0 "${fg_color}" "${bg_color}" "${@}")"; then
+    if result="$(${prompt_function} "${fg_color}" "${bg_color}" "${@}")"; then
         echo "${result}"
     else
         echo -n '$('
         echo -n "${prompt_function}"
-        echo -n ' "${return_code}"'
 
         local argument
         for argument in "${fg_color}" "${bg_color}" "${@}"; do
@@ -90,6 +89,8 @@ _r9e_export_prepared_prompts()
 {
     _r9e_profiling_function_start
 
+    local _R9E_PROMPT_RETURN_CODE='0'
+
     _r9e_profiling_timer_start 'prepare prompt PS1'
     _R9E_PROMPT_PS1_PREPARED="$(_r9e_prepare_prompt "${_R9E_PROMPT_PS1}")"
     _r9e_profiling_timer_end
@@ -108,7 +109,6 @@ _r9e_export_prepared_prompts()
 _r9e_generate_prompt()
 {
     local prompt="${1}"
-    local return_code="${2}"
 
     eval "prompt=\"${prompt}\"" 2>/dev/zero
 
@@ -119,10 +119,12 @@ _r9e_export_prompt()
 {
     local return_code="${1}"
 
-    local ps1="$(_r9e_generate_prompt "${_R9E_PROMPT_PS1_PREPARED}" "${return_code}")"
-    local ps2="$(_r9e_generate_prompt "${_R9E_PROMPT_PS2_PREPARED}" "${return_code}")"
+    local _R9E_PROMPT_RETURN_CODE="${return_code}"
+
+    local ps1="$(_r9e_generate_prompt "${_R9E_PROMPT_PS1_PREPARED}")"
+    local ps2="$(_r9e_generate_prompt "${_R9E_PROMPT_PS2_PREPARED}")"
     local term_title="${_R9E_PROMPT_TERM_TITLE_PREPARED}"
-    term_title="$(_R9E_ENABLE_COLORS='false' _r9e_generate_prompt "${term_title}" "${return_code}")"
+    term_title="$(_R9E_ENABLE_COLORS='false' _r9e_generate_prompt "${term_title}")"
     term_title="$(_r9e_term_title -p "${term_title}")"
 
     export PS1="${term_title}${ps1}"
