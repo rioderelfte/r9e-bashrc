@@ -24,7 +24,6 @@ _r9e_prompt_function_string()
     local text="${*}"
 
     _r9e_colorize -pf "${fg_color}" -b "${bg_color}" "${text}"
-    _r9e_prompt_command_const
 }
 
 _r9e_prompt_function_user()
@@ -33,7 +32,6 @@ _r9e_prompt_function_user()
     local bg_color="${2}"
 
     _r9e_colorize -pf "${fg_color}" -b "${bg_color}" '\u'
-    _r9e_prompt_command_const
 }
 
 _r9e_prompt_function_path()
@@ -42,7 +40,6 @@ _r9e_prompt_function_path()
     local bg_color="${2}"
 
     _r9e_colorize -pf "${fg_color}" -b "${bg_color}" '\W'
-    _r9e_prompt_command_const
 }
 
 _r9e_prompt_function_full_path()
@@ -51,7 +48,6 @@ _r9e_prompt_function_full_path()
     local bg_color="${2}"
 
     _r9e_colorize -pf "${fg_color}" -b "${bg_color}" '\w'
-    _r9e_prompt_command_const
 }
 
 # This idea is from the fish shell (https://github.com/fish-shell/fish-shell)
@@ -61,8 +57,8 @@ _r9e_prompt_function_fish_path()
     local bg_color="${2}"
 
     _r9e_colorize -pf "${fg_color}" -b "${bg_color}" "$(pwd | sed -e "s|^${HOME}|~|"';s|\([^/]\)[^/]*/|\1/|g')"
-    _r9e_prompt_command_const false
 }
+_r9e_prompt_register_volatile_command 'fish_path'
 
 _r9e_prompt_function_hostname()
 {
@@ -70,7 +66,6 @@ _r9e_prompt_function_hostname()
     local bg_color="${2}"
 
     _r9e_colorize -pf "${fg_color}" -b "${bg_color}" '\h'
-    _r9e_prompt_command_const
 }
 
 _r9e_prompt_function_full_hostname()
@@ -79,7 +74,6 @@ _r9e_prompt_function_full_hostname()
     local bg_color="${2}"
 
     _r9e_colorize -pf "${fg_color}" -b "${bg_color}" '\H'
-    _r9e_prompt_command_const
 }
 
 _r9e_prompt_function_dollar()
@@ -88,7 +82,6 @@ _r9e_prompt_function_dollar()
     local bg_color="${2}"
 
     _r9e_colorize -pf "${fg_color}" -b "${bg_color}" '\\\$'
-    _r9e_prompt_command_const
 }
 
 _r9e_prompt_function_at()
@@ -97,7 +90,6 @@ _r9e_prompt_function_at()
     local bg_color="${2}"
 
     _r9e_colorize -pf "${fg_color}" -b "${bg_color}" '@'
-    _r9e_prompt_command_const
 }
 
 _r9e_prompt_function_rainbow_hostname()
@@ -108,7 +100,6 @@ _r9e_prompt_function_rainbow_hostname()
     local hostname="$(_r9e_short_hostname)"
 
     _r9e_colorize_rainbow -pb "${bg_color}" "${hostname}"
-    _r9e_prompt_command_const
 }
 
 _r9e_prompt_function_rainbow_full_hostname()
@@ -119,7 +110,6 @@ _r9e_prompt_function_rainbow_full_hostname()
     local hostname="$(hostname)"
 
     _r9e_colorize_rainbow -pb "${bg_color}" "${hostname}"
-    _r9e_prompt_command_const
 }
 
 _r9e_prompt_function_errcode()
@@ -133,8 +123,8 @@ _r9e_prompt_function_errcode()
     if [ "${return_code}" -ne '0' ]; then
         _r9e_colorize -pf "${fg_color}" -b "${bg_color}" "$(printf "${format}" "${return_code}")"
     fi
-    _r9e_prompt_command_const false
 }
+_r9e_prompt_register_volatile_command 'errcode'
 
 _r9e_prompt_function_jobs_summary()
 {
@@ -148,8 +138,8 @@ _r9e_prompt_function_jobs_summary()
     if [ "${running_jobs}" -gt '0' -o "${sleeping_jobs}" -gt '0' ]; then
         _r9e_colorize -pf "${fg_color}" -b "${bg_color}" "$(printf "${format}" "${running_jobs}" "${sleeping_jobs}")"
     fi
-    _r9e_prompt_command_const false
 }
+_r9e_prompt_register_volatile_command 'jobs_summary'
 
 _r9e_prompt_function_user_string()
 {
@@ -157,5 +147,5 @@ _r9e_prompt_function_user_string()
     local bg_color="${2}"
 
     _r9e_colorize -pf "${fg_color}" -b "${bg_color}" "${_R9E_PROMPT_CURRENT_USER_STRING}"
-    _r9e_prompt_command_const false
 }
+_r9e_prompt_register_volatile_command 'user_string'

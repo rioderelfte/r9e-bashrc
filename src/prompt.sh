@@ -16,11 +16,28 @@
 #                                                                              #
 ################################################################################
 
-_r9e_prompt_command_const()
+_r9e_prompt_get_function_name()
 {
-    local const="${1-true}"
+    local command="${1}"
 
-    ${const}
+    echo "_r9e_prompt_function_${command}"
+}
+
+# record prompt functions which are not const, so which have to be called every
+# time the prompt is generated
+_R9E_PROMPT_VOLATILE_FUNCTIONS=( )
+_r9e_prompt_register_volatile_command()
+{
+    local command="${1}"
+
+    _R9E_PROMPT_VOLATILE_FUNCTIONS+=( "${command}" )
+}
+
+_r9e_prompt_command_is_volatile()
+{
+    local command="${1}"
+
+    _r9e_array_contains "${command}" "${_R9E_PROMPT_VOLATILE_FUNCTIONS[@]}"
 }
 
 _r9e_prompt_resolve_color()
@@ -59,11 +76,10 @@ _r9e_prepare_prompt_single_function()
 
     shift $(( OPTIND - 1 ))
 
-    local prompt_function="_r9e_prompt_function_${command}"
+    local prompt_function="$(_r9e_prompt_get_function_name "${command}")"
 
-    local result
-    if result="$(${prompt_function} "${fg_color}" "${bg_color}" "${@}")"; then
-        echo "${result}"
+    if ! _r9e_prompt_command_is_volatile "${command}"; then
+        echo "$(${prompt_function} "${fg_color}" "${bg_color}" "${@}")"
     else
         echo -n '$('
         echo -n "${prompt_function}"
@@ -88,8 +104,6 @@ _r9e_prepare_prompt()
 _r9e_export_prepared_prompts()
 {
     _r9e_profiling_function_start
-
-    local _R9E_PROMPT_RETURN_CODE='0'
 
     _r9e_profiling_timer_start 'prepare prompt PS1'
     _R9E_PROMPT_PS1_PREPARED="$(_r9e_prepare_prompt "${_R9E_PROMPT_PS1}")"
