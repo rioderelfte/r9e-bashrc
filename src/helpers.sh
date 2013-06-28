@@ -117,3 +117,18 @@ _r9e_run_git_in_directory()
 
     git --git-dir="${directory}/.git" --work-tree="${directory}" "${@}"
 }
+
+_r9e_array_contains()
+{
+    local needle="${1}"
+    shift
+    local haystack=( "${@}" )
+
+    for elem in "${haystack[@]}"; do
+        if [ "${elem}" = "${needle}" ]; then
+            return 0
+        fi
+    done
+
+    return 1
+}
