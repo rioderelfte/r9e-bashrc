@@ -165,12 +165,12 @@ _r9e_term_title()
             format='\033]0;%s\007'
             ;;
         screen*)
-            format='\033k%s\033\\'
+            format='\033k%s\033\\\\'
             ;;
     esac
 
     if "${prompt}" && [ -n "${format}" ]; then
-        format="\[${format}\]"
+        format="\\[${format}\\]"
     fi
 
     printf "${format}" "${text}"
