@@ -63,7 +63,7 @@ fi
 mkcd()
 {
     if [ ${#} -ne 1 ]; then
-        _r9e_print_message 'usage: <directory>' "${FUNCNAME}"
+        _r9e_print_message 'usage: %s <directory>' "${FUNCNAME}"
         return 1
     fi
 
