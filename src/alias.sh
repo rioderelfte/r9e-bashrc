@@ -44,6 +44,8 @@ alias bashrc="source ${_R9E_BASHRC_SRC_PATH}/init.sh"
 
 alias ymd="date '+%Y-%m-%d'"
 
+alias find-swap-files="find . -name '.*.s[a-w][a-p]'"
+
 if which --tty-only 'which' >/dev/zero 2>&1; then
     # Fedora already defines which as an alias before the user's bashrc is
     # sourced. This little hack makes sure there won't be an error if which is
