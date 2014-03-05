@@ -30,3 +30,7 @@ shopt -s histappend
 HISTSIZE=10000
 HISTFILESIZE=10000
 HISTCONTROL='ignoreboth'
+
+if [ "${TERM}" = 'xterm' -a "${COLORTERM}" = 'gnome-terminal' ]; then
+    export TERM='xterm-256color'
+fi
