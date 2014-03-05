@@ -19,7 +19,7 @@
 _R9E_BASHRC_UPDATER_LAST_RUN_FILE="${_R9E_BASHRC_BASE_PATH}/.last-r9e-bashrc-update-run"
 
 if [ -z "${_R9E_BASHRC_UPDATER_MAX_DIFFERENCE}" ]; then
-    _R9E_BASHRC_UPDATER_MAX_DIFFERENCE="$(( 7 * 24 * 3600 ))"
+    _R9E_BASHRC_UPDATER_MAX_DIFFERENCE="$(( 30 * 24 * 3600 ))"
 fi
 
 _r9e_bashrc_updater_check_last_run()
