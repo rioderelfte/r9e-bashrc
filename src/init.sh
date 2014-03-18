@@ -23,7 +23,7 @@ fi
 
 # Check if this is an interactive shell.
 if [[ "${-}" != *i* ]] ; then
-	return
+    return
 fi
 
 if "${_R9E_BASHRC_SKIP:-false}"; then
