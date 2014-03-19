@@ -1,6 +1,6 @@
 ################################################################################
 #                                                                              #
-# Copyright (c) 2011 - 2013, Florian Sowade <f.sowade@r9e.de>                  #
+# Copyright (c) 2011 - 2014, Florian Sowade <f.sowade@r9e.de>                  #
 #                                                                              #
 # Permission to use, copy, modify, and/or distribute this software for any     #
 # purpose with or without fee is hereby granted, provided that the above       #
@@ -16,21 +16,10 @@
 #                                                                              #
 ################################################################################
 
-if [ "${BASH_VERSINFO[0]}" -ge '4' ]; then
-    shopt -s autocd
-    shopt -s globstar
-fi
-
-shopt -s no_empty_cmd_completion
-shopt -s checkwinsize
-
-# history
-shopt -s histappend
-
-HISTSIZE=10000
-HISTFILESIZE=10000
-HISTCONTROL='ignoreboth'
-
 if [ "${TERM}" = 'xterm' -a "${COLORTERM}" = 'gnome-terminal' ]; then
     export TERM='xterm-256color'
+fi
+
+if dircolors --sh >/dev/zero 2>&1; then
+    eval "$(dircolors)"
 fi

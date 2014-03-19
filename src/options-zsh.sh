@@ -16,48 +16,37 @@
 #                                                                              #
 ################################################################################
 
-_r9e_prompt_command()
-{
-    local return_code="${1}"
+# completion
+autoload -Uz compinit
+compinit
 
-    if [ "${_R9E_SHELL}" = 'bash' ]; then
-        # Store the current history to disk.
-        history -a
-    fi
+zmodload zsh/complist
 
-    _r9e_export_prompt "${return_code}"
+zstyle ':completion:*' completer _complete _approximate _ignored
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' menu select=3
 
-    unset _R9E_TMP_RETURN_CODE
+bindkey -M menuselect '^o' accept-and-infer-next-history
 
-    return "${return_code}"
-}
+# history
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
 
-_r9e_print_prompt_command()
-{
-    tr -ds '\n' ' ' <<"EOF"
-_R9E_TMP_RETURN_CODE="${?}";
-if type -t _r9e_prompt_command >/dev/zero; then
-    _r9e_prompt_command "${_R9E_TMP_RETURN_CODE}";
-else
-    unset _R9E_TMP_RETURN_CODE;
-fi;
-EOF
-}
+setopt append_history
+setopt extended_history
+setopt inc_append_history
+setopt hist_ignore_dups
+setopt hist_ignore_space
+setopt hist_verify
 
-_r9e_install_prompt_command()
-{
-    _r9e_profiling_timer_start _r9e_install_prompt_command
+# zle
+bindkey -e
 
-    if [ "${_R9E_SHELL}" = 'bash' ]; then
-        if [[ "${PROMPT_COMMAND}" != *_r9e_prompt_command* ]]; then
-            PROMPT_COMMAND="$(_r9e_print_prompt_command) ${PROMPT_COMMAND}"
-        fi
-    elif [ "${_R9E_SHELL}" = 'zsh' ]; then
-        precmd()
-        {
-            _r9e_prompt_command "${?}"
-        }
-    fi
+bindkey '^[[Z' reverse-menu-complete
 
-    _r9e_profiling_timer_end
-}
+autoload -U select-word-style
+select-word-style bash
+
+# misc
+setopt autocd extendedglob notify

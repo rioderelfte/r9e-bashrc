@@ -1,6 +1,6 @@
 ################################################################################
 #                                                                              #
-# Copyright (c) 2011 - 2013, Florian Sowade <f.sowade@r9e.de>                  #
+# Copyright (c) 2011 - 2014, Florian Sowade <f.sowade@r9e.de>                  #
 #                                                                              #
 # Permission to use, copy, modify, and/or distribute this software for any     #
 # purpose with or without fee is hereby granted, provided that the above       #
@@ -61,15 +61,3 @@ if which --tty-only 'which' >/dev/zero 2>&1; then
 
     alias which='_r9e_which'
 fi
-
-mkcd()
-{
-    if [ ${#} -ne 1 ]; then
-        _r9e_print_message 'usage: %s <directory>' "${FUNCNAME}"
-        return 1
-    fi
-
-    local dir="${1}"
-
-    mkdir -p "${dir}" && cd "${dir}"
-}

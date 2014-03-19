@@ -1,6 +1,6 @@
 ################################################################################
 #                                                                              #
-# Copyright (c) 2011 - 2013, Florian Sowade <f.sowade@r9e.de>                  #
+# Copyright (c) 2011 - 2014, Florian Sowade <f.sowade@r9e.de>                  #
 #                                                                              #
 # Permission to use, copy, modify, and/or distribute this software for any     #
 # purpose with or without fee is hereby granted, provided that the above       #
@@ -40,9 +40,7 @@ makeh()
         return ${PIPESTATUS[0]}
     ) 3>&1 1>&2
 }
-if _r9e_is_shell_function '_make'; then
-    complete -F _make makeh
-fi
+_r9e_set_completion_function makeh _make
 
 wait_for()
 {
@@ -70,6 +68,17 @@ wait_for()
 
     _r9e_print_message "${nl}Host %s is now available" "${host}"
 }
-if _r9e_is_shell_function '_known_hosts'; then
-    complete -F _known_hosts wait_for
-fi
+_r9e_set_completion_function wait_for _hosts
+_r9e_set_completion_function wait_for _known_hosts
+
+mkcd()
+{
+    if [ ${#} -ne 1 ]; then
+        _r9e_print_message 'usage: %s <directory>' "${FUNCNAME}"
+        return 1
+    fi
+
+    local dir="${1}"
+
+    mkdir -p "${dir}" && cd "${dir}"
+}

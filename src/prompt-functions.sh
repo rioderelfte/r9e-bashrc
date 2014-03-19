@@ -1,6 +1,6 @@
 ################################################################################
 #                                                                              #
-# Copyright (c) 2011 - 2013, Florian Sowade <f.sowade@r9e.de>                  #
+# Copyright (c) 2011 - 2014, Florian Sowade <f.sowade@r9e.de>                  #
 #                                                                              #
 # Permission to use, copy, modify, and/or distribute this software for any     #
 # purpose with or without fee is hereby granted, provided that the above       #
@@ -31,7 +31,12 @@ _r9e_prompt_function_user()
     local fg_color="${1}"
     local bg_color="${2}"
 
-    _r9e_colorize -pf "${fg_color}" -b "${bg_color}" '\u'
+    local string='\u'
+    if [ "${_R9E_SHELL}" = 'zsh' ]; then
+        string='%n'
+    fi
+
+    _r9e_colorize -pf "${fg_color}" -b "${bg_color}" "${string}"
 }
 
 _r9e_prompt_function_path()
@@ -39,7 +44,12 @@ _r9e_prompt_function_path()
     local fg_color="${1}"
     local bg_color="${2}"
 
-    _r9e_colorize -pf "${fg_color}" -b "${bg_color}" '\W'
+    local string='\W'
+    if [ "${_R9E_SHELL}" = 'zsh' ]; then
+        string='%~'
+    fi
+
+    _r9e_colorize -pf "${fg_color}" -b "${bg_color}" "${string}"
 }
 
 _r9e_prompt_function_full_path()
@@ -47,7 +57,12 @@ _r9e_prompt_function_full_path()
     local fg_color="${1}"
     local bg_color="${2}"
 
-    _r9e_colorize -pf "${fg_color}" -b "${bg_color}" '\w'
+    local string='\w'
+    if [ "${_R9E_SHELL}" = 'zsh' ]; then
+        string='%1~'
+    fi
+
+    _r9e_colorize -pf "${fg_color}" -b "${bg_color}" "${string}"
 }
 
 # This idea is from the fish shell (https://github.com/fish-shell/fish-shell)
@@ -65,7 +80,12 @@ _r9e_prompt_function_hostname()
     local fg_color="${1}"
     local bg_color="${2}"
 
-    _r9e_colorize -pf "${fg_color}" -b "${bg_color}" '\h'
+    local string='\h'
+    if [ "${_R9E_SHELL}" = 'zsh' ]; then
+        string='%m'
+    fi
+
+    _r9e_colorize -pf "${fg_color}" -b "${bg_color}" "${string}"
 }
 
 _r9e_prompt_function_full_hostname()
@@ -73,7 +93,12 @@ _r9e_prompt_function_full_hostname()
     local fg_color="${1}"
     local bg_color="${2}"
 
-    _r9e_colorize -pf "${fg_color}" -b "${bg_color}" '\H'
+    local string='\H'
+    if [ "${_R9E_SHELL}" = 'zsh' ]; then
+        string='%M'
+    fi
+
+    _r9e_colorize -pf "${fg_color}" -b "${bg_color}" "${string}"
 }
 
 _r9e_prompt_function_dollar()
@@ -81,7 +106,12 @@ _r9e_prompt_function_dollar()
     local fg_color="${1}"
     local bg_color="${2}"
 
-    _r9e_colorize -pf "${fg_color}" -b "${bg_color}" '\\\$'
+    local string='\\\$'
+    if [ "${_R9E_SHELL}" = 'zsh' ]; then
+        string='%(!.#.$)'
+    fi
+
+    _r9e_colorize -pf "${fg_color}" -b "${bg_color}" "${string}"
 }
 
 _r9e_prompt_function_at()

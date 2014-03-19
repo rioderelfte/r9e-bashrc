@@ -1,6 +1,6 @@
 ################################################################################
 #                                                                              #
-# Copyright (c) 2011 - 2013, Florian Sowade <f.sowade@r9e.de>                  #
+# Copyright (c) 2011 - 2014, Florian Sowade <f.sowade@r9e.de>                  #
 #                                                                              #
 # Permission to use, copy, modify, and/or distribute this software for any     #
 # purpose with or without fee is hereby granted, provided that the above       #
@@ -122,7 +122,7 @@ _r9e_colorize_rainbow()
         local color_code=$(( ( ${cur_code} * ${hash} + ${hash_yet} ) * 1093 % 1667 ))
         color_code=$(( ${color_code} / 238 ))
 
-        local color
+        local color=''
         case "${color_code}" in
             0 | 7)
                 color='red';;
@@ -170,7 +170,11 @@ _r9e_term_title()
     esac
 
     if "${prompt}" && [ -n "${format}" ]; then
-        format="\\[${format}\\]"
+        if [ "${_R9E_SHELL}" = 'bash' ]; then
+            format="\\[$format\\]"
+        elif [ "${_R9E_SHELL}" = 'zsh' ]; then
+            format="%%{$format%%}"
+        fi
     fi
 
     printf "${format}" "${text}"
@@ -208,7 +212,11 @@ _r9e_colorize_impl()
 
     local format='\033[%sm'
     if "${prompt}"; then
-        format="\[$format\]"
+        if [ "${_R9E_SHELL}" = 'bash' ]; then
+            format="\[$format\]"
+        elif [ "${_R9E_SHELL}" = 'zsh' ]; then
+            format="%%{$format%%}"
+        fi
     fi
     if ! ${_R9E_ENABLE_COLORS}; then
         format=''

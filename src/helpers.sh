@@ -1,6 +1,6 @@
 ################################################################################
 #                                                                              #
-# Copyright (c) 2011 - 2013, Florian Sowade <f.sowade@r9e.de>                  #
+# Copyright (c) 2011 - 2014, Florian Sowade <f.sowade@r9e.de>                  #
 #                                                                              #
 # Permission to use, copy, modify, and/or distribute this software for any     #
 # purpose with or without fee is hereby granted, provided that the above       #
@@ -36,30 +36,33 @@ _r9e_source_directory()
 {
     local directory="${1}"
 
+    if ! [ -d "${directory}" ]; then
+        return
+    fi
+
     local file
-    for file in "${directory}"/*.sh; do
+    while read -rd $'\0' file; do
         _r9e_source "${file}"
-    done
+    done < <(find "${directory}" -mindepth 1 -maxdepth 1 -name '*.sh' -xtype f -print0)
 
     local subdirectory
-    for subdirectory in "${directory}"/*.d; do
-        if [ -d "${subdirectory}" ]; then
-            _r9e_source_directory "${subdirectory}"
-        fi
-    done
+    while read -rd $'\0' subdirectory; do
+        _r9e_source_directory "${subdirectory}"
+    done < <(find "${directory}" -mindepth 1 -maxdepth 1 -name '*.d' -xtype d -print0)
 }
 
 # Prints the hostname up to the first dot (like \h in bash prompting).
 _r9e_short_hostname()
 {
-    echo "${HOSTNAME%%.*}"
+    local hostname="${HOSTNAME:-${HOST}}"
+    echo "${hostname%%.*}"
 }
 
 _r9e_is_executable()
 {
     local name="${1}"
 
-    type -t "${name}" >/dev/zero
+    type "${name}" >/dev/zero 2>&1
 }
 
 _r9e_check_type()
@@ -68,9 +71,16 @@ _r9e_check_type()
     local type="${2}"
 
     local real_type
-    if real_type="$(type -t "${name}")"; then
-        test "${real_type}" = "${type}"
-        return ${?}
+    if [ "${_R9E_SHELL}" = 'zsh' ]; then
+        if real_type="$(whence -w "${name}")"; then
+            test "${real_type}" = "${name}: ${type}"
+            return ${?}
+        fi
+    else
+        if real_type="$(type -t "${name}")"; then
+            test "${real_type}" = "${type}"
+            return ${?}
+        fi
     fi
 
     return 1
@@ -122,7 +132,8 @@ _r9e_array_contains()
 {
     local needle="${1}"
     shift
-    local haystack=( "${@}" )
+    local haystack
+    haystack=( "${@}" )
 
     for elem in "${haystack[@]}"; do
         if [ "${elem}" = "${needle}" ]; then
@@ -131,4 +142,18 @@ _r9e_array_contains()
     done
 
     return 1
+}
+
+_r9e_set_completion_function()
+{
+    local command="${1}"
+    local function="${2}"
+
+    if _r9e_is_shell_function "${function}"; then
+        if [ "${_R9E_SHELL}" = 'bash' ]; then
+            complete -F "${function}" "${command}"
+        elif [ "${_R9E_SHELL}" = 'zsh' ]; then
+            compdef "${function}" "${command}"
+        fi
+    fi
 }

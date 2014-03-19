@@ -1,7 +1,7 @@
-This is my personal bashrc. It is currently used on different Linux flavors
-(mainly Fedora, Debian and Gentoo) and on Mac OS X. It might work on other
-platforms. If you encounter any problems on your platform, feel free to contact
-me. Of course patches to make the code more portable are very welcome.
+This is my personal Bash and ZSH rc. It is currently used on different Linux
+flavors (mainly Fedora, Debian and Gentoo) and on Mac OS X. It might work on
+other platforms. If you encounter any problems on your platform, feel free to
+contact me. Of course patches to make the code more portable are very welcome.
 
 # Installation
 
@@ -22,9 +22,9 @@ mkdir -p /usr/local/share
 git clone 'git://github.com/rioderelfte/r9e-bashrc.git' /usr/local/share/r9e-bashrc
 ```
 
-Then you have to make sure the `src/init.sh` file
-(e.g. `/usr/local/share/r9e-bashrc/src/init.sh`) gets sourced during the bash
-start up. On Linux this can be achieved by creating a symbolic link in
+Then you have to make sure the `src/init.sh` file (e.g.
+`/usr/local/share/r9e-bashrc/src/init.sh`) gets sourced during the shell start
+up. On Linux this can be achieved by creating a symbolic link in
 `/etc/profile.d`:
 
 ```sh
@@ -43,12 +43,19 @@ To install the bashrc for one user the code has to be placed somewhere, too
 git clone 'git://github.com/rioderelfte/r9e-bashrc.git' ~/r9e-bashrc
 ```
 
-Then you need to make sure `src/init.sh` gets sourced. Either you can source it
-from your `~/.bashrc` or you can just link it:
+Then you need to make sure `src/init.sh` gets sourced. For Bash you either can
+source it from your `~/.bashrc` or you can just link it:
 
 ```sh
 rm .bashrc
 ln -s r9e-bashrc/src/init.sh ~/.bashrc
+```
+
+For the ZSH you can source or link it from your `~/.zshrc`:
+
+```sh
+rm .zshrc
+ln -s r9e-bashrc/src/init.sh ~/.zshrc
 ```
 
 ### .bashrc and .bash_profile
@@ -75,13 +82,14 @@ To automatically install this bashrc for one user, a convenience script
 running:
 
 ```sh
-curl 'https://raw.github.com/rioderelfte/r9e-bashrc/master/install.sh' | bash
+curl 'https://raw.github.com/rioderelfte/r9e-bashrc/master/install.sh' | sh
 ```
 
-The script clones this repository to `~/.r9e/bashrc` and installs a `~/.bashrc`
-file which will source `~/.r9e/bashrc/src/init.sh`. If you already had a
-`~/.bashrc` it will be renamed to `~/.bashrc.pre-r9e`. But please see the script
-itself if you want more details.
+The script clones this repository to `~/.r9e/bashrc` and installs `~/.bashrc`
+and `~/.zshrc` files which will source `~/.r9e/bashrc/src/init.sh`. If you
+already had a `~/.bashrc` or `~/.zshrc` it will be renamed to
+`~/.bashrc.pre-r9e` or `~/zshrc.pre-r9e` respectively. But please see the
+script itself if you want more details.
 
 The automatic installer does not ensure your `~/.bash_profile` sources the
 bashrc. See the section [.bashrc and .bash_profile](#bashrc-and-bash_profile)

@@ -1,6 +1,6 @@
 ################################################################################
 #                                                                              #
-# Copyright (c) 2011 - 2013, Florian Sowade <f.sowade@r9e.de>                  #
+# Copyright (c) 2011 - 2014, Florian Sowade <f.sowade@r9e.de>                  #
 #                                                                              #
 # Permission to use, copy, modify, and/or distribute this software for any     #
 # purpose with or without fee is hereby granted, provided that the above       #
@@ -46,7 +46,7 @@ _r9e_prompt_resolve_color()
 
     if [ "${color}" = 'user' ]; then
         color="${_R9E_PROMPT_USER_COLOR_DEFAULT}"
-        if [ "${EUID}" == 0 ]; then
+        if [ "${EUID}" = 0 ]; then
             color="${_R9E_PROMPT_USER_COLOR_ROOT}"
         fi
     fi
@@ -103,7 +103,7 @@ _r9e_prepare_prompt()
 
 _r9e_export_prepared_prompts()
 {
-    _r9e_profiling_function_start
+    _r9e_profiling_timer_start _r9e_export_prepared_prompts
 
     _r9e_profiling_timer_start 'prepare prompt PS1'
     _R9E_PROMPT_PS1_PREPARED="$(_r9e_prepare_prompt "${_R9E_PROMPT_PS1}")"
@@ -117,7 +117,7 @@ _r9e_export_prepared_prompts()
     _R9E_PROMPT_TERM_TITLE_PREPARED="$(_R9E_ENABLE_COLORS='false' _r9e_prepare_prompt "${_R9E_PROMPT_TERM_TITLE}")"
     _r9e_profiling_timer_end
 
-    _r9e_profiling_function_end
+    _r9e_profiling_timer_end
 }
 
 _r9e_generate_prompt()

@@ -1,7 +1,7 @@
 #!/bin/bash
 ################################################################################
 #                                                                              #
-# Copyright (c) 2011 - 2013, Florian Sowade <f.sowade@r9e.de>                  #
+# Copyright (c) 2011 - 2014, Florian Sowade <f.sowade@r9e.de>                  #
 #                                                                              #
 # Permission to use, copy, modify, and/or distribute this software for any     #
 # purpose with or without fee is hereby granted, provided that the above       #
@@ -42,7 +42,7 @@ main()
     local last_updater_run_file="${install_path}/.last-r9e-bashrc-update-run"
     local repository='git://github.com/rioderelfte/r9e-bashrc.git'
     local user_bashrc="${HOME}/.bashrc"
-    local user_bashrc_backup="${user_bashrc}.pre-r9e"
+    local user_zshrc="${HOME}/.zshrc"
 
     # check if installation is save
     if [ -e "${install_path}" ]; then
@@ -52,6 +52,7 @@ main()
 
     if [ -e "${base_path}" -a ! -d "${base_path}" ]; then
         print_error "${base_path} exists and is no directory"
+        exit 1
     fi
 
     # install the files
@@ -70,16 +71,18 @@ main()
 This file is used by the automatic r9e-bashrc updater. Please do not touch it.
 EOF
 
-    # install ~/.bashrc
-    if [ -e "${user_bashrc}" ]; then
-        print_info "making a backup of your old .bashrc to ${user_bashrc_backup}"
-        mv "${user_bashrc}" "${user_bashrc_backup}"
-    fi
+    for rc_file in "${user_bashrc}" "${user_zshrc}"; do
+        local backup_file="${rc_file}.pre-r9e"
 
-    cat > "${user_bashrc}" <<EOF
+        if [ -e "${rc_file}" ]; then
+            print_info "making a backup of your old ${rc_file} to ${backup_file}"
+            mv "${rc_file}" "${backup_file}"
+        fi
+
+        cat > "${rc_file}" <<EOF
 ################################################################################
 #                                                                              #
-# Copyright (c) 2011 - 2013, Florian Sowade <f.sowade@r9e.de>                  #
+# Copyright (c) 2011 - 2014, Florian Sowade <f.sowade@r9e.de>                  #
 #                                                                              #
 # Permission to use, copy, modify, and/or distribute this software for any     #
 # purpose with or without fee is hereby granted, provided that the above       #
@@ -108,6 +111,7 @@ _R9E_BASHRC_ENABLE_UPDATER=true
 # start the r9e-bashrc
 source '${r9e_init_file}'
 EOF
+    done
 
     print_info 'successfully installed r9e-bashrc'
 }

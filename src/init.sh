@@ -1,6 +1,6 @@
 ################################################################################
 #                                                                              #
-# Copyright (c) 2011 - 2013, Florian Sowade <f.sowade@r9e.de>                  #
+# Copyright (c) 2011 - 2014, Florian Sowade <f.sowade@r9e.de>                  #
 #                                                                              #
 # Permission to use, copy, modify, and/or distribute this software for any     #
 # purpose with or without fee is hereby granted, provided that the above       #
@@ -17,7 +17,11 @@
 ################################################################################
 
 # Check if this is a bash.
-if [ -z "${BASH_VERSION}" ]; then
+if [ -n "${BASH_VERSION}" ]; then
+    _R9E_SHELL='bash'
+elif [ -n "${ZSH_VERSION}" ]; then
+    _R9E_SHELL='zsh'
+else
     return
 fi
 
@@ -32,7 +36,8 @@ fi
 
 _r9e_path_is_absolute()
 {
-    local path="${1}"
+    local path
+    path="${1}"
 
     [[ "${path}" = /* ]]
 }
@@ -79,8 +84,6 @@ _r9e_disable_profiling()
 {
     _r9e_profiling_timer_start() { :; }
     _r9e_profiling_timer_end() { :; }
-    _r9e_profiling_function_start() { :; }
-    _r9e_profiling_function_end() { :; }
 
     _R9E_BASHRC_ENABLE_PROFILING=false
 }
@@ -104,9 +107,10 @@ _r9e_include()
 
 _r9e_bashrc_main()
 {
-    local init_file="$(_r9e_readlink_e "${BASH_SOURCE[0]}")"
+    local init_file="$(_r9e_readlink_e "${_R9E_BASHRC_INIT_FILE}")"
     _R9E_BASHRC_SRC_PATH="$(dirname "${init_file}")"
     _R9E_BASHRC_BASE_PATH="$(dirname "${_R9E_BASHRC_SRC_PATH}")"
+    unset _R9E_INIT_FILE
     unset init_file
 
     if ${_R9E_BASHRC_ENABLE_PROFILING:-false}; then
@@ -115,7 +119,7 @@ _r9e_bashrc_main()
         _r9e_disable_profiling
     fi
 
-    _r9e_profiling_function_start
+    _r9e_profiling_timer_start _r9e_bashrc_main
 
     _r9e_include 'helpers'
 
@@ -123,13 +127,16 @@ _r9e_bashrc_main()
     # version.
     _R9E_BASHRC_SKIP=true
 
-    # source some system config files
-    # Fedora:
-    _r9e_source '/etc/bashrc'
-    # Debian/Ubuntu:
-    # check if bash_completion has already been sourced
-    if [ -z "${BASH_COMPLETION_COMPAT_DIR}" ]; then
-        _r9e_source '/usr/share/bash-completion/bash_completion' '/etc/bash_completion'
+    if [ "${_R9E_SHELL}" = 'bash' ]; then
+        # source some system config files
+        # Fedora:
+        _r9e_source '/etc/bashrc'
+        # Debian/Ubuntu:
+        # check if bash_completion has already been sourced
+        if [ -z "${BASH_COMPLETION_COMPAT_DIR}" ]; then
+            _r9e_source '/usr/share/bash-completion/bash_completion' \
+                '/etc/bash_completion'
+        fi
     fi
 
     unset _R9E_BASHRC_SKIP
@@ -141,6 +148,7 @@ _r9e_bashrc_main()
     _r9e_include 'prompt-functions'
     _r9e_include 'path'
     _r9e_include 'options'
+    _r9e_include "options-${_R9E_SHELL}"
     _r9e_include 'alias'
     _r9e_include 'functions'
     _r9e_include 'prompt-command'
@@ -161,7 +169,13 @@ _r9e_bashrc_main()
         _r9e_bashrc_updater_check_last_run
     fi
 
-    _r9e_profiling_function_end
+    _r9e_profiling_timer_end
 }
+
+if [ "${_R9E_SHELL}" = 'zsh' ] && [ "${0}" = 'zsh' -o "${0}" = '-zsh' ]; then
+    _R9E_BASHRC_INIT_FILE="${ZDOTDIR-${HOME}}/.zshrc"
+else
+    _R9E_BASHRC_INIT_FILE="${BASH_SOURCE:-${0}}"
+fi
 
 _r9e_bashrc_main

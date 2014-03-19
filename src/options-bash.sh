@@ -16,48 +16,15 @@
 #                                                                              #
 ################################################################################
 
-_r9e_prompt_command()
-{
-    local return_code="${1}"
+if [ "${BASH_VERSINFO[0]}" -ge '4' ]; then
+    shopt -s autocd
+    shopt -s globstar
+fi
 
-    if [ "${_R9E_SHELL}" = 'bash' ]; then
-        # Store the current history to disk.
-        history -a
-    fi
+shopt -s no_empty_cmd_completion
+shopt -s checkwinsize
+shopt -s histappend
 
-    _r9e_export_prompt "${return_code}"
-
-    unset _R9E_TMP_RETURN_CODE
-
-    return "${return_code}"
-}
-
-_r9e_print_prompt_command()
-{
-    tr -ds '\n' ' ' <<"EOF"
-_R9E_TMP_RETURN_CODE="${?}";
-if type -t _r9e_prompt_command >/dev/zero; then
-    _r9e_prompt_command "${_R9E_TMP_RETURN_CODE}";
-else
-    unset _R9E_TMP_RETURN_CODE;
-fi;
-EOF
-}
-
-_r9e_install_prompt_command()
-{
-    _r9e_profiling_timer_start _r9e_install_prompt_command
-
-    if [ "${_R9E_SHELL}" = 'bash' ]; then
-        if [[ "${PROMPT_COMMAND}" != *_r9e_prompt_command* ]]; then
-            PROMPT_COMMAND="$(_r9e_print_prompt_command) ${PROMPT_COMMAND}"
-        fi
-    elif [ "${_R9E_SHELL}" = 'zsh' ]; then
-        precmd()
-        {
-            _r9e_prompt_command "${?}"
-        }
-    fi
-
-    _r9e_profiling_timer_end
-}
+HISTSIZE=10000
+HISTFILESIZE=10000
+HISTCONTROL='ignoreboth'

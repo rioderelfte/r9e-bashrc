@@ -1,6 +1,6 @@
 ################################################################################
 #                                                                              #
-# Copyright (c) 2011 - 2013, Florian Sowade <f.sowade@r9e.de>                  #
+# Copyright (c) 2011 - 2014, Florian Sowade <f.sowade@r9e.de>                  #
 #                                                                              #
 # Permission to use, copy, modify, and/or distribute this software for any     #
 # purpose with or without fee is hereby granted, provided that the above       #
@@ -24,7 +24,7 @@ fi
 
 _r9e_bashrc_updater_check_last_run()
 {
-    _r9e_profiling_function_start
+    _r9e_profiling_timer_start _r9e_bashrc_updater_check_last_run
 
     if [ ! -f "${_R9E_BASHRC_UPDATER_LAST_RUN_FILE}" ]; then
         _r9e_print_message 'The r9e bashrc updater has never been run'
@@ -43,7 +43,7 @@ _r9e_bashrc_updater_check_last_run()
 
     _r9e_print_message 'Run r9e_bashrc_updater to check for updates now'
 
-    _r9e_profiling_function_end
+    _r9e_profiling_timer_end
 }
 
 r9e_bashrc_updater()
