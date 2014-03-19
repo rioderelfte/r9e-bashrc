@@ -137,9 +137,14 @@ _r9e_export_prompt()
 
     local ps1="$(_r9e_generate_prompt "${_R9E_PROMPT_PS1_PREPARED}")"
     local ps2="$(_r9e_generate_prompt "${_R9E_PROMPT_PS2_PREPARED}")"
-    local term_title="${_R9E_PROMPT_TERM_TITLE_PREPARED}"
-    term_title="$(_R9E_ENABLE_COLORS='false' _r9e_generate_prompt "${term_title}")"
-    term_title="$(_r9e_term_title -p "${term_title}")"
+
+    local term_title=''
+
+    if [ "${_R9E_PROMPT_ENABLE_TERM_TITLE:-true}" = 'true' ]; then
+        term_title="${_R9E_PROMPT_TERM_TITLE_PREPARED}"
+        term_title="$(_R9E_ENABLE_COLORS='false' _r9e_generate_prompt "${term_title}")"
+        term_title="$(_r9e_term_title -p "${term_title}")"
+    fi
 
     export PS1="${term_title}${ps1}"
     export PS2="${term_title}${ps2}"
