@@ -25,7 +25,7 @@ git clone 'git://github.com/rioderelfte/r9e-bashrc.git' /usr/local/share/r9e-bas
 Then you have to make sure the `src/init.sh` file (e.g.
 `/usr/local/share/r9e-bashrc/src/init.sh`) gets sourced during the shell start
 up. On Linux this can be achieved by creating a symbolic link in
-`/etc/profile.d`:
+`/etc/profile.d/`:
 
 ```sh
 ln -s /usr/local/share/r9e-bashrc/src/init.sh /etc/profile.d/r9e-bashrc.sh
