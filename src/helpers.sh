@@ -36,6 +36,8 @@ _r9e_source_directory()
 {
     local directory="${1}"
 
+    directory="${directory}/"
+
     if ! [ -d "${directory}" ]; then
         return
     fi
