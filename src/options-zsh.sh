@@ -48,5 +48,7 @@ bindkey '^[[Z' reverse-menu-complete
 autoload -U select-word-style
 select-word-style bash
 
+setopt interactive_comments
+
 # misc
 setopt autocd extendedglob notify
