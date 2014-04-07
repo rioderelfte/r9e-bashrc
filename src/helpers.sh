@@ -45,12 +45,12 @@ _r9e_source_directory()
     local file
     while read -rd $'\0' file; do
         _r9e_source "${file}"
-    done < <(find "${directory}" -mindepth 1 -maxdepth 1 -name '*.sh' -xtype f -print0)
+    done < <(find -L "${directory}" -mindepth 1 -maxdepth 1 -name '*.sh' -type f -print0)
 
     local subdirectory
     while read -rd $'\0' subdirectory; do
         _r9e_source_directory "${subdirectory}"
-    done < <(find "${directory}" -mindepth 1 -maxdepth 1 -name '*.d' -xtype d -print0)
+    done < <(find -L "${directory}" -mindepth 1 -maxdepth 1 -name '*.d' -type d -print0)
 }
 
 # Prints the hostname up to the first dot (like \h in bash prompting).
