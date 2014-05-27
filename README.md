@@ -82,7 +82,7 @@ To automatically install this bashrc for one user, a convenience script
 running:
 
 ```sh
-curl 'https://raw.github.com/rioderelfte/r9e-bashrc/master/install.sh' | sh
+curl 'https://raw.githubusercontent.com/rioderelfte/r9e-bashrc/master/install.sh' | sh
 ```
 
 The script clones this repository to `~/.r9e/bashrc` and installs `~/.bashrc`
