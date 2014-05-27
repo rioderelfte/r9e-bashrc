@@ -1,0 +1,31 @@
+#compdef ninja
+
+working_dir="${PWD}"
+
+_arguments -s -S \
+    {-h,--help}'[print help]' \
+    '--version[print version number]' \
+    '-C=[change to DIR before doing anything else]:directory:_files -/' \
+    '-f=[specify input build file]:file:_files' \
+    '-j=[run N jobs in parallel]:number' \
+    '-l=[do not start new jobs if the load average is greater than N]:number' \
+    '-k=[keep going until N jobs fail]:number' \
+    '-n[dry run]' \
+    '-v[show all command lines while building]' \
+    '-d=[enable debugging]:debugging:(stats explain)' \
+    '-t=[run a subtool]:tool:(browse clean commands graph query targets compdb list)' \
+    '*: :->target' \
+    && return 0
+
+if (( $+opt_args[-C] )); then
+    working_dir="${opt_args[-C]}"
+fi
+
+case "${state}" in
+'target')
+    targets=(
+        ${(f)"$(_call_program ninja ninja -C "${working_dir}" -t targets 2>/dev/zero | sed 's|:.*||')"}
+    )
+    _describe -t target 'target' targets && return 0
+    ;;
+esac

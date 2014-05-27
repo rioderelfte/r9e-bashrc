@@ -17,6 +17,11 @@
 ################################################################################
 
 # completion
+fpath=(
+    "${_R9E_BASHRC_SRC_PATH}/zsh-completion"
+    ${fpath}
+)
+
 autoload -Uz compinit
 compinit
 
