@@ -171,9 +171,9 @@ _r9e_term_title()
 
     if "${prompt}" && [ -n "${format}" ]; then
         if [ "${_R9E_SHELL}" = 'bash' ]; then
-            format="\\[$format\\]"
+            format="\\[${format}\\]"
         elif [ "${_R9E_SHELL}" = 'zsh' ]; then
-            format="%%{$format%%}"
+            format="%%{${format}%%}"
         fi
     fi
 
