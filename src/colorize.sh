@@ -159,25 +159,37 @@ _r9e_term_title()
 
     local text="${*}"
 
-    local format=''
+    local print_title='false'
+    local prefix=''
+    local suffix=''
     case "${TERM}" in
         xterm*|rxvt*)
-            format='\033]0;%s\007'
+            print_title='true'
+            prefix='\033]0;'
+            suffix='\007'
             ;;
         screen*)
-            format='\033k%s\033\\\\'
+            print_title='true'
+            prefix='\033k'
+            suffix='\033\\'
             ;;
     esac
 
-    if "${prompt}" && [ -n "${format}" ]; then
+    if ! "${print_title}"; then
+        return
+    fi
+
+    if "${prompt}"; then
         if [ "${_R9E_SHELL}" = 'bash' ]; then
-            format="\\[${format}\\]"
+            prefix='\['"${prefix}"
+            suffix="${suffix}"'\]'
         elif [ "${_R9E_SHELL}" = 'zsh' ]; then
-            format="%%{${format}%%}"
+            prefix='%{'"${prefix}"
+            suffix="${suffix}"'%}'
         fi
     fi
 
-    printf "${format}" "${text}"
+    echo -n "${prefix}${text}${suffix}"
 }
 
 _r9e_colorize_impl()
