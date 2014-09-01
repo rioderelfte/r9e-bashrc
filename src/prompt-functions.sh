@@ -46,7 +46,7 @@ _r9e_prompt_function_path()
 
     local string='\W'
     if [ "${_R9E_SHELL}" = 'zsh' ]; then
-        string='%~'
+        string='%1~'
     fi
 
     _r9e_colorize -pf "${fg_color}" -b "${bg_color}" "${string}"
@@ -59,7 +59,7 @@ _r9e_prompt_function_full_path()
 
     local string='\w'
     if [ "${_R9E_SHELL}" = 'zsh' ]; then
-        string='%1~'
+        string='%~'
     fi
 
     _r9e_colorize -pf "${fg_color}" -b "${bg_color}" "${string}"
