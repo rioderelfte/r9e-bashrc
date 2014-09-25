@@ -41,18 +41,18 @@ _r9e_strip_from_path()
     # Normalize directory by removing a trailing /.
     directory="${directory%/}"
 
-    local path="${PATH}"
+    local new_path="${PATH}"
 
     # Remove the directory from the beginning.
-    path="${path#${directory}:}"
+    new_path="${new_path#${directory}:}"
 
     # Remove the directory from the end.
-    path="${path%:${directory}}"
+    new_path="${new_path%:${directory}}"
 
     # Remove the directory from the middle.
-    path="${path//:${directory}:/:}"
+    new_path="${new_path//:${directory}:/:}"
 
-    export PATH="${path}"
+    export PATH="${new_path}"
 }
 
 _r9e_prepend_to_path "${HOME}/bin"
