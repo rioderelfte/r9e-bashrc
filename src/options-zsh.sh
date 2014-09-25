@@ -17,10 +17,20 @@
 ################################################################################
 
 # completion
-fpath=(
+r9e_completion_paths=(
+    '/usr/local/share/zsh-completions'
+    '/usr/local/share/zsh/site-functions'
     "${_R9E_BASHRC_SRC_PATH}/zsh-completion"
-    ${fpath}
 )
+
+for dir in ${r9e_completion_paths}; do
+    if [ -d "${dir}" ]; then
+        fpath=(
+            "${dir}"
+            ${fpath}
+        )
+    fi
+done
 
 autoload -Uz compinit
 compinit
