@@ -67,3 +67,5 @@ setopt interactive_comments
 
 # misc
 setopt autocd extendedglob notify
+
+autoload -U zmv
