@@ -48,6 +48,8 @@ _r9e_bashrc_updater_check_last_run()
 
 r9e_bashrc_updater()
 {
+    local old_commit="$(_r9e_run_git_in_directory "${_R9E_BASHRC_BASE_PATH}" rev-parse HEAD 2>/dev/zero)"
+
     if ! _r9e_run_git_in_directory "${_R9E_BASHRC_BASE_PATH}" pull; then
         _r9e_print_message 'Error while updating the r9e-bashrc git repository (%s)' "${_R9E_BASHRC_BASE_PATH}"
         return 1
@@ -64,4 +66,12 @@ EOF
     bashrc
 
     _r9e_print_message 'Successfully updated r9e bashrc'
+
+    if [ -n "${old_commit}" ]; then
+        local cur_commit="$(_r9e_run_git_in_directory "${_R9E_BASHRC_BASE_PATH}" rev-parse HEAD 2>/dev/zero)"
+        if [ "${old_commit}" != "${cur_commit}" ]; then
+            _r9e_print_message "Changes since ${old_commit}:"
+            _r9e_run_git_in_directory "${_R9E_BASHRC_BASE_PATH}" log "${old_commit}.."
+        fi
+    fi
 }
