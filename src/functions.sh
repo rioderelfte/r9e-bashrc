@@ -82,3 +82,33 @@ mkcd()
 
     mkdir -p "${dir}" && cd "${dir}"
 }
+
+cpv() {
+    if [ ${#} -ne 2 ]; then
+        echo "usage: ${FUNCNAME} <src> <dest>"
+    fi
+
+    local src="${1}"
+    local dest="${2}"
+
+    if which pv >/dev/zero 2>&1; then
+        pv < "${src}" > "${dest}"
+    else
+        cp "${src}" "${dest}"
+    fi
+}
+
+scpv() {
+    if [ ${#} -ne 2 ]; then
+        echo "usage: ${FUNCNAME} <src> <dest>"
+    fi
+
+    local src="${1}"
+    local dest="${2}"
+
+    if which pv >/dev/zero 2>&1; then
+        sudo sh -c "pv < '${src}' > '${dest}'"
+    else
+        sudo cp "${src}" "${dest}"
+    fi
+}
