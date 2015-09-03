@@ -61,3 +61,5 @@ if which --tty-only 'which' >/dev/zero 2>&1; then
 
     alias which='_r9e_which'
 fi
+
+alias cdg='cd_git_root'

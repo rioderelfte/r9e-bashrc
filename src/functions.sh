@@ -136,3 +136,17 @@ scpv() {
         sudo cp "${src}" "${dest}"
     fi
 }
+
+cd_git_root() {
+    local currentDir="${PWD}"
+
+    while [ "${currentDir}" != '/' ]; do
+        if [ -d "${currentDir}/.git" ]; then
+            _r9e_print_message 'changing to %s' "${currentDir}"
+            cd "${currentDir}"
+            return
+        fi
+
+        currentDir="$(dirname "${currentDir}")"
+    done
+}
