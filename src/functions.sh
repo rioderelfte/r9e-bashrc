@@ -71,6 +71,30 @@ wait_for()
 _r9e_set_completion_function wait_for _hosts
 _r9e_set_completion_function wait_for _known_hosts
 
+wait_for_port()
+{
+    if [ ${#} -ne 2 ]; then
+        _r9e_print_message "usage: ${FUNCNAME} <hostname> <port>"
+        return 1
+    fi
+
+    local host="${1}"
+    local port="${2}"
+
+    local nl=''
+    while ! nc -zG 2 "${host}" "${port}" >/dev/zero; do
+        # make sure we have a chance to cancel the loop:
+        sleep 0.5
+
+        _r9e_print_message -n '.'
+        nl='\n'
+    done
+
+    _r9e_print_message "${nl}port %s on %s is now available" "${port}" "${host}"
+}
+_r9e_set_completion_function wait_for_port _hosts
+_r9e_set_completion_function wait_for_port _known_hosts
+
 mkcd()
 {
     if [ ${#} -ne 1 ]; then
