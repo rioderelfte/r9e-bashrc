@@ -23,6 +23,13 @@ r9e_completion_paths=(
     "${_R9E_BASHRC_SRC_PATH}/zsh-completion"
 )
 
+if _r9e_is_executable brew; then
+    r9e_completion_paths+=(
+        "$(brew --prefix)/share/zsh-completions"
+        "$(brew --prefix)/share/zsh/site-functions"
+    )
+fi
+
 for dir in ${r9e_completion_paths}; do
     if [ -d "${dir}" ]; then
         fpath=(
