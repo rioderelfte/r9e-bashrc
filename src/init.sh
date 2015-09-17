@@ -131,11 +131,17 @@ _r9e_bashrc_main()
         # source some system config files
         # Fedora:
         _r9e_source '/etc/bashrc'
-        # Debian/Ubuntu:
+
         # check if bash_completion has already been sourced
         if [ -z "${BASH_COMPLETION_COMPAT_DIR}" ]; then
+            # Debian/Ubuntu:
             _r9e_source '/usr/share/bash-completion/bash_completion' \
                 '/etc/bash_completion'
+
+            # OS X with homebrew:
+            if _r9e_is_executable brew; then
+                _r9e_source "$(brew --prefix)/etc/bash_completion"
+            fi
         fi
     fi
 
