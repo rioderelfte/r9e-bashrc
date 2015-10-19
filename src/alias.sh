@@ -23,9 +23,9 @@ if _r9e_is_executable 'xdg-open'; then
     alias gopen='xdg-open'
 fi
 
-alias 'grep=grep --color=auto'
-alias 'egrep=egrep --color=auto'
-alias 'fgrep=fgrep --color=auto'
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
 
 if ls --color=auto >/dev/zero 2>&1; then
     alias ls='ls --color=auto'
