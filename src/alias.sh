@@ -63,3 +63,8 @@ if which --tty-only 'which' >/dev/zero 2>&1; then
 fi
 
 alias cdg='cd_git_root'
+
+alias wssh='wait_for_ssh'
+if [ "${_R9E_SHELL}" = 'bash' ]; then
+    _r9e_set_completion_function wssh _ssh
+fi

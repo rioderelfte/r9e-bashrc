@@ -95,6 +95,28 @@ wait_for_port()
 _r9e_set_completion_function wait_for_port _hosts
 _r9e_set_completion_function wait_for_port _known_hosts
 
+wait_for_ssh()
+{
+    local host="$(ssh -G "${@}" | grep '^hostname ' | sed 's/^hostname //')"
+    local port="$(ssh -G "${@}" | grep '^port ' | sed 's/^port //')"
+
+    wait_for_port "${host}" "${port}"
+    ssh "${@}"
+}
+if [ "${_R9E_SHELL}" = 'zsh' ]; then
+    if _r9e_is_shell_function '_ssh'; then
+        _wait_for_ssh()
+        {
+            local service='ssh'
+            _ssh
+        }
+
+        _r9e_set_completion_function wait_for_ssh _wait_for_ssh
+    fi
+else
+    _r9e_set_completion_function wait_for_ssh _ssh
+fi
+
 mkcd()
 {
     if [ ${#} -ne 1 ]; then
