@@ -47,6 +47,7 @@ zmodload zsh/complist
 zstyle ':completion:*' completer _complete _approximate _ignored
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' menu select=3
+zstyle ':completion:*' use-ip true
 # complete a trailing slash after ..
 zstyle -e ':completion:*' special-dirs '[[ ${PREFIX} == (../)#.. ]] && reply=(..)'
 
