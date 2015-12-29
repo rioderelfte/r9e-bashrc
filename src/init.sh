@@ -155,8 +155,8 @@ _r9e_bashrc_main()
     _r9e_include 'path'
     _r9e_include 'options'
     _r9e_include "options-${_R9E_SHELL}"
-    _r9e_include 'alias'
-    _r9e_include 'functions'
+    [ "${_R9E_BASHRC_SOURCE_DEFAULT_ALIASES:-true}" == "true" ] && _r9e_include 'alias'
+    [ "${_R9E_BASHRC_SOURCE_DEFAULT_FUNCTIONS:-true}" == "true" ] && _r9e_include 'functions'
     _r9e_include 'prompt-command'
 
     # user config
