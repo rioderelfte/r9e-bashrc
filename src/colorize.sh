@@ -201,7 +201,7 @@ _r9e_colorize_impl()
     local text="${5}"
 
     if [ "${style}" = 'none' ]; then
-        if "${prompt}"; then
+        if "${prompt}" && ${_R9E_BASHRC_PROMPT_AUTO_BOLD:-true}; then
             style='bold'
         else
             style='default'
