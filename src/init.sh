@@ -164,11 +164,14 @@ _r9e_bashrc_main()
     _r9e_include 'prompt-command'
 
     # user config
-    _r9e_source "/etc/r9e-${_R9E_SHELL}rc.sh"
-    _r9e_source_directory "/etc/r9e-${_R9E_SHELL}rc.d"
-    _r9e_source "${HOME}/.${_R9E_SHELL}rc.local"
-    _r9e_source "${HOME}/.${_R9E_SHELL}_aliases"
-    _r9e_source_directory "${HOME}/.${_R9E_SHELL}rc.d"
+    local shell
+    for shell in 'shell' "${_R9E_SHELL}"; do
+        _r9e_source "/etc/r9e-${shell}rc.sh"
+        _r9e_source_directory "/etc/r9e-${shell}rc.d"
+        _r9e_source "${HOME}/.${shell}rc.local"
+        _r9e_source "${HOME}/.${shell}_aliases"
+        _r9e_source_directory "${HOME}/.${shell}rc.d"
+    done
 
     _r9e_export_prepared_prompts
     _r9e_install_prompt_command
