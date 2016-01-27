@@ -155,16 +155,20 @@ _r9e_bashrc_main()
     _r9e_include 'path'
     _r9e_include 'options'
     _r9e_include "options-${_R9E_SHELL}"
-    _r9e_include 'alias'
-    _r9e_include 'functions'
+    if ${_R9E_BASHRC_SOURCE_DEFAULT_ALIASES:-true}; then
+        _r9e_include 'alias'
+    fi
+    if ${_R9E_BASHRC_SOURCE_DEFAULT_FUNCTIONS:-true}; then
+        _r9e_include 'functions'
+    fi
     _r9e_include 'prompt-command'
 
     # user config
-    _r9e_source '/etc/r9e-bashrc.sh'
-    _r9e_source_directory '/etc/r9e-bashrc.d'
-    _r9e_source "${HOME}/.bashrc.local"
-    _r9e_source "${HOME}/.bash_aliases"
-    _r9e_source_directory "${HOME}/.bashrc.d"
+    _r9e_source "/etc/r9e-${_R9E_SHELL}rc.sh"
+    _r9e_source_directory "/etc/r9e-${_R9E_SHELL}rc.d"
+    _r9e_source "${HOME}/.${_R9E_SHELL}rc.local"
+    _r9e_source "${HOME}/.${_R9E_SHELL}_aliases"
+    _r9e_source_directory "${HOME}/.${_R9E_SHELL}rc.d"
 
     _r9e_export_prepared_prompts
     _r9e_install_prompt_command

@@ -113,6 +113,10 @@ _r9e_export_prepared_prompts()
     _R9E_PROMPT_PS2_PREPARED="$(_r9e_prepare_prompt "${_R9E_PROMPT_PS2}")"
     _r9e_profiling_timer_end
 
+    _r9e_profiling_timer_start 'prepare prompt RPROMPT'
+    _R9E_PROMPT_RPROMPT_PREPARED="$(_r9e_prepare_prompt "${_R9E_PROMPT_RPROMPT}")"
+    _r9e_profiling_timer_end
+
     _r9e_profiling_timer_start 'prepare prompt TERM TITLE'
     _R9E_PROMPT_TERM_TITLE_PREPARED="$(_R9E_ENABLE_COLORS='false' _r9e_prepare_prompt "${_R9E_PROMPT_TERM_TITLE}")"
     _r9e_profiling_timer_end
@@ -137,6 +141,7 @@ _r9e_export_prompt()
 
     local ps1="$(_r9e_generate_prompt "${_R9E_PROMPT_PS1_PREPARED}")"
     local ps2="$(_r9e_generate_prompt "${_R9E_PROMPT_PS2_PREPARED}")"
+    local rprompt="$(_r9e_generate_prompt "${_R9E_PROMPT_RPROMPT_PREPARED}")"
 
     local term_title=''
 
@@ -148,6 +153,7 @@ _r9e_export_prompt()
 
     export PS1="${term_title}${ps1}"
     export PS2="${term_title}${ps2}"
+    export RPROMPT="${rprompt}"
 }
 
 # Allow the user put a string into the prompt (for one session).
@@ -164,6 +170,7 @@ r9e_set_prompt_string()
 # the default prompts
 _R9E_PROMPT_PS1="%user_string()%user(-f user)%at(-f user)%rainbow_hostname()%errcode(-f red ' err: %d')%jobs_summary(-f yellow ' (%dr, %ds)') %fish_path(-f blue) %dollar(-f blue) "
 _R9E_PROMPT_PS2='> '
+_R9E_RPROMPT=''
 _R9E_PROMPT_TERM_TITLE="%user()%at()%hostname(): %full_path()"
 
 # some configuration options
