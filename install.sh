@@ -1,7 +1,7 @@
 #!/bin/bash
 ################################################################################
 #                                                                              #
-# Copyright (c) 2011 - 2014, Florian Sowade <f.sowade@r9e.de>                  #
+# Copyright (c) 2011 - 2016, Florian Sowade <f.sowade@r9e.de>                  #
 #                                                                              #
 # Permission to use, copy, modify, and/or distribute this software for any     #
 # purpose with or without fee is hereby granted, provided that the above       #
@@ -82,7 +82,7 @@ EOF
         cat > "${rc_file}" <<EOF
 ################################################################################
 #                                                                              #
-# Copyright (c) 2011 - 2014, Florian Sowade <f.sowade@r9e.de>                  #
+# Copyright (c) 2011 - 2016, Florian Sowade <f.sowade@r9e.de>                  #
 #                                                                              #
 # Permission to use, copy, modify, and/or distribute this software for any     #
 # purpose with or without fee is hereby granted, provided that the above       #
@@ -106,6 +106,9 @@ EOF
 
 # variables to customize the r9e-bashrc:
 #_R9E_BASHRC_ENABLE_PROFILING=true
+#_R9E_BASHRC_SOURCE_DEFAULT_ALIASES=false
+#_R9E_BASHRC_SOURCE_DEFAULT_FUNCTIONS=false
+#_R9E_BASHRC_PROMPT_AUTO_BOLD=false
 _R9E_BASHRC_ENABLE_UPDATER=true
 
 # start the r9e-bashrc
