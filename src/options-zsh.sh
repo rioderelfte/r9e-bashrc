@@ -23,11 +23,13 @@ r9e_completion_paths=(
     "${_R9E_BASHRC_SRC_PATH}/zsh-completion"
 )
 
-if _r9e_is_executable brew; then
-    r9e_completion_paths+=(
-        "$(brew --prefix)/share/zsh-completions"
-        "$(brew --prefix)/share/zsh/site-functions"
-    )
+if ${_R9E_BASHRC_ZSH_BREW_COMPLETION:-true}; then
+    if _r9e_is_executable brew; then
+        r9e_completion_paths+=(
+            "$(brew --prefix)/share/zsh-completions"
+            "$(brew --prefix)/share/zsh/site-functions"
+        )
+    fi
 fi
 
 for dir in ${r9e_completion_paths}; do
@@ -39,8 +41,11 @@ for dir in ${r9e_completion_paths}; do
     fi
 done
 
-autoload -Uz compinit
-compinit
+
+if ${_R9E_BASHRC_ZSH_COMPINIT:-true}; then
+    autoload -Uz compinit
+    compinit
+fi
 
 zmodload zsh/complist
 
