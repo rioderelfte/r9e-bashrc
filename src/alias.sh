@@ -64,7 +64,9 @@ fi
 
 alias cdg='cd_git_root'
 
+alias ssh-without-keys='ssh -o PubkeyAuthentication=no -o ControlMaster=no -o ControlPath=none'
 alias wssh='wait_for_ssh'
 if [ "${_R9E_SHELL}" = 'bash' ]; then
+    _r9e_set_completion_function ssh-without-keys _ssh
     _r9e_set_completion_function wssh _ssh
 fi
