@@ -70,4 +70,5 @@ alias no_host_key_wssh='wssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChe
 if [ "${_R9E_SHELL}" = 'bash' ]; then
     _r9e_set_completion_function ssh-without-keys _ssh
     _r9e_set_completion_function wssh _ssh
+    _r9e_set_completion_function no_host_key_wssh _ssh
 fi
