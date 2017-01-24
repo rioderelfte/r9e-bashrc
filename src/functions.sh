@@ -81,8 +81,13 @@ wait_for_port()
     local host="${1}"
     local port="${2}"
 
+    local timeout_flag='w'
+    if nc -h 2>&1 | grep -q -- '-G .*timeout'; then
+        timeout_flag='G'
+    fi
+
     local nl=''
-    while ! nc -zG 2 "${host}" "${port}" >/dev/zero; do
+    while ! nc "-z${timeout_flag}" 2 "${host}" "${port}" >/dev/zero; do
         # make sure we have a chance to cancel the loop:
         sleep 0.5
 
