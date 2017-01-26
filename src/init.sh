@@ -107,7 +107,16 @@ _r9e_include()
 
 _r9e_bashrc_main()
 {
-    local init_file="$(_r9e_readlink_e "${_R9E_BASHRC_INIT_FILE}")"
+    local init_file
+    if [ "${_R9E_SHELL}" = 'bash' ]; then
+        init_file="${BASH_SOURCE[0]}"
+    elif [ "${_R9E_SHELL}" = 'zsh' ]; then
+        init_file="${(%):-%x}"
+    else
+        return
+    fi
+    init_file="$(_r9e_readlink_e "${init_file}")"
+
     _R9E_BASHRC_SRC_PATH="$(dirname "${init_file}")"
     _R9E_BASHRC_BASE_PATH="$(dirname "${_R9E_BASHRC_SRC_PATH}")"
     unset _R9E_INIT_FILE
@@ -184,11 +193,5 @@ _r9e_bashrc_main()
 
     _r9e_profiling_timer_end
 }
-
-if [ "${_R9E_SHELL}" = 'zsh' ] && [ "${0}" = 'zsh' -o "${0}" = '-zsh' ]; then
-    _R9E_BASHRC_INIT_FILE="${ZDOTDIR-${HOME}}/.zshrc"
-else
-    _R9E_BASHRC_INIT_FILE="${BASH_SOURCE:-${0}}"
-fi
 
 _r9e_bashrc_main
