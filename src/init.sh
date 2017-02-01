@@ -119,8 +119,6 @@ _r9e_bashrc_main()
 
     _R9E_BASHRC_SRC_PATH="$(dirname "${init_file}")"
     _R9E_BASHRC_BASE_PATH="$(dirname "${_R9E_BASHRC_SRC_PATH}")"
-    unset _R9E_INIT_FILE
-    unset init_file
 
     if ${_R9E_BASHRC_ENABLE_PROFILING:-false}; then
         _r9e_enable_profiling
