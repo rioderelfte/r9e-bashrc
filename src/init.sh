@@ -107,11 +107,18 @@ _r9e_include()
 
 _r9e_bashrc_main()
 {
-    local init_file="$(_r9e_readlink_e "${_R9E_BASHRC_INIT_FILE}")"
+    local init_file
+    if [ "${_R9E_SHELL}" = 'bash' ]; then
+        init_file="${BASH_SOURCE[0]}"
+    elif [ "${_R9E_SHELL}" = 'zsh' ]; then
+        init_file="${(%):-%x}"
+    else
+        return
+    fi
+    init_file="$(_r9e_readlink_e "${init_file}")"
+
     _R9E_BASHRC_SRC_PATH="$(dirname "${init_file}")"
     _R9E_BASHRC_BASE_PATH="$(dirname "${_R9E_BASHRC_SRC_PATH}")"
-    unset _R9E_INIT_FILE
-    unset init_file
 
     if ${_R9E_BASHRC_ENABLE_PROFILING:-false}; then
         _r9e_enable_profiling
@@ -164,11 +171,14 @@ _r9e_bashrc_main()
     _r9e_include 'prompt-command'
 
     # user config
-    _r9e_source "/etc/r9e-${_R9E_SHELL}rc.sh"
-    _r9e_source_directory "/etc/r9e-${_R9E_SHELL}rc.d"
-    _r9e_source "${HOME}/.${_R9E_SHELL}rc.local"
-    _r9e_source "${HOME}/.${_R9E_SHELL}_aliases"
-    _r9e_source_directory "${HOME}/.${_R9E_SHELL}rc.d"
+    local shell
+    for shell in 'shell' "${_R9E_SHELL}"; do
+        _r9e_source "/etc/r9e-${shell}rc.sh"
+        _r9e_source_directory "/etc/r9e-${shell}rc.d"
+        _r9e_source "${HOME}/.${shell}rc.local"
+        _r9e_source "${HOME}/.${shell}_aliases"
+        _r9e_source_directory "${HOME}/.${shell}rc.d"
+    done
 
     _r9e_export_prepared_prompts
     _r9e_install_prompt_command
@@ -181,11 +191,5 @@ _r9e_bashrc_main()
 
     _r9e_profiling_timer_end
 }
-
-if [ "${_R9E_SHELL}" = 'zsh' ] && [ "${0}" = 'zsh' -o "${0}" = '-zsh' ]; then
-    _R9E_BASHRC_INIT_FILE="${ZDOTDIR-${HOME}}/.zshrc"
-else
-    _R9E_BASHRC_INIT_FILE="${BASH_SOURCE:-${0}}"
-fi
 
 _r9e_bashrc_main

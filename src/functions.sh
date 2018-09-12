@@ -81,8 +81,13 @@ wait_for_port()
     local host="${1}"
     local port="${2}"
 
+    local timeout_flag='w'
+    if nc -h 2>&1 | grep -q -- '-G .*timeout'; then
+        timeout_flag='G'
+    fi
+
     local nl=''
-    while ! nc -zG 2 "${host}" "${port}" >/dev/zero; do
+    while ! nc "-z${timeout_flag}" 2 "${host}" "${port}" >/dev/zero; do
         # make sure we have a chance to cancel the loop:
         sleep 0.5
 
@@ -97,8 +102,18 @@ _r9e_set_completion_function wait_for_port _known_hosts
 
 wait_for_ssh()
 {
-    local host="$(ssh -G "${@}" | grep '^hostname ' | sed 's/^hostname //')"
-    local port="$(ssh -G "${@}" | grep '^port ' | sed 's/^port //')"
+    local host="$(ssh -G "${@}" 2>&- | grep '^hostname ' | sed 's/^hostname //')"
+    local port="$(ssh -G "${@}" 2>&- | grep '^port ' | sed 's/^port //')"
+
+    if [ -z "${host}" -o -z "${port}" ]; then
+        _r9e_print_message 'unable to determine remote host or port'
+        return 1
+    fi
+
+    if ssh -G "${@}" 2>&- | grep -q '^proxy\(jump\|command\) '; then
+        _r9e_print_message 'ProxyJump or ProxyCommand is not supported'
+        return 1
+    fi
 
     wait_for_port "${host}" "${port}"
     ssh "${@}"

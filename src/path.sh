@@ -16,24 +16,6 @@
 #                                                                              #
 ################################################################################
 
-_r9e_prepend_to_path()
-{
-    local directory="${1}"
-
-    # Normalize directory by removing a trailing /.
-    directory="${directory%/}"
-
-    if [ ! -d "${directory}" ]; then
-        return
-    fi
-
-    if echo "${PATH}" | egrep -q "(^|:)${directory}($|:)"; then
-        return
-    fi
-
-    export PATH="${directory}:${PATH}"
-}
-
 _r9e_strip_from_path()
 {
     local directory="${1}"
