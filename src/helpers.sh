@@ -63,16 +63,16 @@ _r9e_source_directory()
     local file
     while read -rd $'\0' file; do
         _r9e_source "${file}"
-    done < <(find -L "${directory}" -mindepth 1 -maxdepth 1 -name '*.sh' -type f -print0)
+    done < <(find -L "${directory}" -mindepth 1 -maxdepth 1 -name '*.sh' -type f -print0 | LC_ALL=C sort -z)
 
     local subdirectory
     while read -rd $'\0' subdirectory; do
         _r9e_source_directory "${subdirectory}"
-    done < <(find -L "${directory}" -mindepth 1 -maxdepth 1 -name '*.d' -type d -print0)
+    done < <(find -L "${directory}" -mindepth 1 -maxdepth 1 -name '*.d' -type d -print0 | LC_ALL=C sort -z)
 
     while read -rd $'\0' subdirectory; do
         _r9e_prepend_to_path "${subdirectory}"
-    done < <(find -L "${directory}" -mindepth 1 -maxdepth 1 -name '*.path' -type d -print0)
+    done < <(find -L "${directory}" -mindepth 1 -maxdepth 1 -name '*.path' -type d -print0 | LC_ALL=C sort -z)
 }
 
 # Prints the hostname up to the first dot (like \h in bash prompting).
