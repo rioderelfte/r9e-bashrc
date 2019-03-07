@@ -40,6 +40,13 @@ alias lal='lla'
 alias l.='ls -d .*'
 alias ll.='ls -ld .*'
 
+if _r9e_is_executable exa; then
+    alias el='exa'
+    alias ell='exa -l'
+    alias ela='exa -la'
+    alias ea='exa -a'
+fi
+
 alias bashrc="source ${_R9E_BASHRC_SRC_PATH}/init.sh"
 
 alias ymd="date '+%Y-%m-%d'"
