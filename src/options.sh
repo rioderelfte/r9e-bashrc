@@ -1,6 +1,6 @@
 ################################################################################
 #                                                                              #
-# Copyright (c) 2011 - 2014, Florian Sowade <f.sowade@r9e.de>                  #
+# Copyright (c) 2011 - 2021, Florian Sowade <f.sowade@r9e.de>                  #
 #                                                                              #
 # Permission to use, copy, modify, and/or distribute this software for any     #
 # purpose with or without fee is hereby granted, provided that the above       #
@@ -23,3 +23,5 @@ fi
 if dircolors --sh >/dev/zero 2>&1; then
     eval "$(dircolors)"
 fi
+
+export BAT_THEME="OneHalfLight"
