@@ -25,3 +25,6 @@ if dircolors --sh >/dev/zero 2>&1; then
 fi
 
 export BAT_THEME="OneHalfLight"
+if _r9e_is_executable 'fd'; then
+    export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude .git'
+fi
