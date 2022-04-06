@@ -42,8 +42,8 @@ alias ll.='ls -ld .*'
 
 if _r9e_is_executable exa; then
     alias el='exa'
-    alias ell='exa -l'
-    alias ela='exa -la'
+    alias ell='exa --icons -l'
+    alias ela='exa --icons -la'
     alias ea='exa -a'
 fi
 
