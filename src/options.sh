@@ -28,3 +28,7 @@ export BAT_THEME="OneHalfLight"
 if _r9e_is_executable 'fd'; then
     export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude .git'
 fi
+
+if _r9e_is_executable brew; then
+    _r9e_source "$(brew --prefix)/opt/fzf/shell/key-bindings.${_R9E_SHELL}"
+fi
