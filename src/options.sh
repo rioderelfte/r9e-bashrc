@@ -26,7 +26,7 @@ fi
 
 export BAT_THEME="OneHalfLight"
 export FZF_DEFAULT_OPTS='--color=fg:-1,bg:-1,preview-fg:-1,preview-bg:-1,hl:196,fg+:-1,bg+:254,hl+:196,gutter:-1,pointer:9'
-export SKIM_DEFAULT_OPTIONS="${FZF_DEFAULT_OPTS}"
+export SKIM_DEFAULT_OPTIONS="${FZF_DEFAULT_OPTS},matched_bg:-1,current_match_bg:-1"
 if _r9e_is_executable 'fd'; then
     export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude .git'
     export SKIM_DEFAULT_COMMAND="${FZF_DEFAULT_COMMAND}"
