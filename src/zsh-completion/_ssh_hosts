@@ -6,10 +6,10 @@ integer ind
 
 # If users-hosts matches, we shouldn't complete anything else.
 if [[ "$IPREFIX" == *@ ]]; then
-  _combination -s '[:@]' my-accounts users-hosts "users=${IPREFIX/@}" hosts "$@" && return
+  _combination -s '[:@]' my-accounts users-hosts "users=${IPREFIX/@}" hosts "$@"
 else
   _combination -s '[:@]' my-accounts users-hosts \
-    ${opt_args[-l]:+"users=${opt_args[-l]:q}"} hosts "$@" && return
+    ${opt_args[-l]:+"users=${opt_args[-l]:q}"} hosts "$@"
 fi
 if (( ind = ${words[(I)-F]} )); then
   config=${~words[ind+1]} 2>/dev/null
