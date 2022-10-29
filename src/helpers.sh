@@ -63,7 +63,7 @@ _r9e_source_directory()
     local file
     while read -rd $'\0' file; do
         _r9e_source "${file}"
-    done < <(find -L "${directory}" -mindepth 1 -maxdepth 1 -name '*.sh' -type f -print0 | LC_ALL=C sort -z)
+    done < <(find -L "${directory}" -mindepth 1 -maxdepth 1 \( -name '*.sh' -or -name "*.${_R9E_SHELL}" \) -type f -print0 | LC_ALL=C sort -z)
 
     local subdirectory
     while read -rd $'\0' subdirectory; do
