@@ -47,6 +47,10 @@ if _r9e_is_executable exa; then
     alias ea='exa -a'
 fi
 
+if _r9e_is_executable bat; then
+    alias batp='bat --plain'
+fi
+
 alias bashrc="source ${_R9E_BASHRC_SRC_PATH}/init.sh"
 
 alias ymd="date '+%Y-%m-%d'"
