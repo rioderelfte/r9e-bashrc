@@ -71,7 +71,7 @@ _r9e_prompt_function_fish_path()
     local fg_color="${1}"
     local bg_color="${2}"
 
-    _r9e_colorize -pf "${fg_color}" -b "${bg_color}" "$(pwd | sed -e "s|^${HOME}|~|"';s|\([^/]\)[^/]*/|\1/|g')"
+    _r9e_colorize -pf "${fg_color}" -b "${bg_color}" "$(pwd | sed -e "s|/\$||;s|^${HOME}|~|"';s|\([^/]\)[^/]*/|\1/|g')"
 }
 _r9e_prompt_register_volatile_command 'fish_path'
 
