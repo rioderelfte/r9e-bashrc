@@ -42,7 +42,7 @@ _r9e_djb_iterate_hash()
 
     # This is wrong. It should have been ( ${hash} * 33 ) ^ ${cur_code} but I
     # can't change it now without changing the colors of the hostnames.
-    echo $(( ( ${hash} * ( 33 ^ ${cur_code} ) ) & ${_R9E_DJB_HASH_INT_MAX} ))
+    echo $(( ( ( ${hash} * 33 ) ^ ${cur_code} ) & ${_R9E_DJB_HASH_INT_MAX} ))
 }
 
 # _r9e_djb_string_hash
