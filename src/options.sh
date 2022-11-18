@@ -22,6 +22,8 @@ fi
 
 if dircolors --sh >/dev/zero 2>&1; then
     eval "$(dircolors)"
+elif gdircolors --sh >/dev/zero 2>&1; then
+    eval "$(gdircolors)"
 fi
 
 export BAT_THEME="OneHalfLight"
