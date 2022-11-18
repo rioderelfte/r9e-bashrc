@@ -170,7 +170,7 @@ r9e_set_prompt_string()
 # the default prompts
 _R9E_PROMPT_PS1="%user_string()%user(-f user)%at(-f user)%rainbow_hostname()%errcode(-f red ' err: %d')%jobs_summary(-f yellow ' (%dr, %ds)') %fish_path(-f blue) %dollar(-f blue) "
 _R9E_PROMPT_PS2='> '
-_R9E_RPROMPT=''
+_R9E_PROMPT_RPROMPT=''
 _R9E_PROMPT_TERM_TITLE="%user()%at()%hostname(): %full_path()"
 
 # some configuration options
