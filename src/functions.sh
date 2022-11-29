@@ -16,32 +16,6 @@
 #                                                                              #
 ################################################################################
 
-# overwrite the command not found handles, which query the package manager for
-# the package you need to install to for the command you just wanted to
-# run. This takes much to long every time you mistyped some command.
-#
-# Instead this command_not_found_handle strips an initial $ from the command, so
-# you could paste code which has the dollar prefixed to each line.
-command_not_found_handle()
-{
-    if [ "${1}" = '$' ]; then
-        shift
-        "${@}"
-    else
-        _r9e_print_message '%s: %s: command not found' "${0}" "${1}"
-        return 127
-    fi
-}
-
-makeh()
-{
-    (
-        make "${@}" 2>&1 1>&3 | grep '\(error\|warning\|Fehler\|Warnung\): \|$'
-        return ${PIPESTATUS[0]}
-    ) 3>&1 1>&2
-}
-_r9e_set_completion_function makeh _make
-
 wait_for()
 {
     if [ ${#} -ne 1 ]; then
@@ -142,36 +116,6 @@ mkcd()
     local dir="${1}"
 
     mkdir -p "${dir}" && cd "${dir}"
-}
-
-cpv() {
-    if [ ${#} -ne 2 ]; then
-        echo "usage: ${FUNCNAME} <src> <dest>"
-    fi
-
-    local src="${1}"
-    local dest="${2}"
-
-    if which pv >/dev/zero 2>&1; then
-        pv < "${src}" > "${dest}"
-    else
-        cp "${src}" "${dest}"
-    fi
-}
-
-scpv() {
-    if [ ${#} -ne 2 ]; then
-        echo "usage: ${FUNCNAME} <src> <dest>"
-    fi
-
-    local src="${1}"
-    local dest="${2}"
-
-    if which pv >/dev/zero 2>&1; then
-        sudo sh -c "pv < '${src}' > '${dest}'"
-    else
-        sudo cp "${src}" "${dest}"
-    fi
 }
 
 cd_git_root() {
