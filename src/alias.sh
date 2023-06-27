@@ -51,6 +51,10 @@ if _r9e_is_executable bat; then
     alias batp='bat --plain'
 fi
 
+if _r9e_is_executable fd; then
+    alias fd-dirs='fd --unrestricted --prune --glob'
+fi
+
 alias bashrc="source ${_R9E_BASHRC_SRC_PATH}/init.sh"
 
 alias ymd="date '+%Y-%m-%d'"
