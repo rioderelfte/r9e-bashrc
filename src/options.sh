@@ -34,8 +34,8 @@ if _r9e_is_executable 'fd'; then
     export SKIM_DEFAULT_COMMAND="${FZF_DEFAULT_COMMAND}"
     export FZF_CTRL_T_COMMAND='fd --type f --type d --hidden --exclude .git'
 fi
-if _r9e_is_executable 'bat' && _r9e_is_executable 'exa'; then
-    export FZF_CTRL_T_OPTS='--preview "test -d {} && exa -lF --icons --group-directories-first {} || bat -f {}"'
+if _r9e_is_executable 'bat' && _r9e_is_executable 'eza'; then
+    export FZF_CTRL_T_OPTS='--preview "test -d {} && eza -lF --icons --color=always --group-directories-first {} || bat -f {}"'
 fi
 
 if _r9e_is_executable brew; then

@@ -33,18 +33,16 @@ elif [ "$(uname)" = "Darwin" ]; then
     alias ls='ls -G'
 fi
 
-alias ll='ls -lh'
-alias la='ls -a'
-alias lla='ls -lah'
-alias lal='lla'
-alias l.='ls -d .*'
-alias ll.='ls -ld .*'
-
-if _r9e_is_executable exa; then
-    alias el='exa'
-    alias ell='exa --icons -l'
-    alias ela='exa --icons -la'
-    alias ea='exa -a'
+if _r9e_is_executable eza; then
+    alias l='eza'
+    alias ll='eza --icons -lF'
+    alias la='eza -aa'
+    alias lla='eza --icons -lFaa'
+else
+    alias l='ls'
+    alias ll='ls -lh'
+    alias la='ls -a'
+    alias lla='ls -lah'
 fi
 
 if _r9e_is_executable bat; then
