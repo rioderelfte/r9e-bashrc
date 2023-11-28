@@ -134,6 +134,14 @@ _r9e_bashrc_main()
     # version.
     _R9E_BASHRC_SKIP=true
 
+    local brew_prefix
+    for brew_prefix in '/opt/homebrew' '/usr/local'; do
+        if _r9e_is_executable "${brew_prefix}/bin/brew"; then
+            eval "$("${brew_prefix}/bin/brew" shellenv)"
+            break
+        fi
+    done
+
     if [ "${_R9E_SHELL}" = 'bash' ]; then
         # source some system config files
         # Fedora:
