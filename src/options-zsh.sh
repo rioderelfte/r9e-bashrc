@@ -65,7 +65,7 @@ SAVEHIST=10000
 
 setopt append_history
 setopt extended_history
-setopt inc_append_history
+setopt inc_append_history_time
 setopt hist_ignore_dups
 setopt hist_ignore_space
 setopt hist_verify
