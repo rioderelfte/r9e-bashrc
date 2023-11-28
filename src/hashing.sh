@@ -40,8 +40,6 @@ _r9e_djb_iterate_hash()
     local hash=${1}
     local cur_code=${2}
 
-    # This is wrong. It should have been ( ${hash} * 33 ) ^ ${cur_code} but I
-    # can't change it now without changing the colors of the hostnames.
     echo $(( ( ( ${hash} * 33 ) ^ ${cur_code} ) & ${_R9E_DJB_HASH_INT_MAX} ))
 }
 
