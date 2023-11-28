@@ -168,8 +168,8 @@ _r9e_bashrc_main()
     _r9e_include 'prompt'
     _r9e_include 'prompt-functions'
     _r9e_include 'path'
-    _r9e_include 'options'
     _r9e_include "options-${_R9E_SHELL}"
+    _r9e_include 'options'
     if ${_R9E_BASHRC_SOURCE_DEFAULT_ALIASES:-true}; then
         _r9e_include 'alias'
     fi

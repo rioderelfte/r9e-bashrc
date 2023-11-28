@@ -38,6 +38,6 @@ if _r9e_is_executable 'bat' && _r9e_is_executable 'eza'; then
     export FZF_CTRL_T_OPTS='--preview "test -d {} && eza -lF --icons --color=always --group-directories-first {} || bat -f {}"'
 fi
 
-if _r9e_is_executable brew; then
-    _r9e_source "$(brew --prefix)/opt/fzf/shell/key-bindings.${_R9E_SHELL}"
+if _r9e_is_executable atuin; then
+    eval "$(atuin init "${_R9E_SHELL}" --disable-up-arrow)"
 fi
