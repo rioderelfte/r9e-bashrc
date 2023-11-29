@@ -25,6 +25,6 @@ shopt -s no_empty_cmd_completion
 shopt -s checkwinsize
 shopt -s histappend
 
-HISTSIZE=10000
-HISTFILESIZE=10000
+HISTSIZE=1000000
+HISTFILESIZE=1000000
 HISTCONTROL='ignoreboth'

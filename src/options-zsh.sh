@@ -60,8 +60,8 @@ bindkey -M menuselect '^o' accept-and-infer-next-history
 
 # history
 HISTFILE=~/.zsh_history
-HISTSIZE=10000
-SAVEHIST=10000
+HISTSIZE=1000000
+SAVEHIST=1000000
 
 setopt append_history
 setopt extended_history
