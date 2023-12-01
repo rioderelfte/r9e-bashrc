@@ -84,3 +84,32 @@ setopt interactive_comments
 setopt autocd extendedglob notify
 
 autoload -U zmv
+
+if _r9e_is_executable 'sk' && _r9e_is_executable 'fd' && _r9e_is_executable 'bat' && _r9e_is_executable 'eza'; then
+    _r9e_search_file() {
+        zle -I
+
+        file="$( \
+            fd \
+                --type f --type d \
+                --color always \
+                --hidden \
+                --exclude .git | \
+            sk \
+                --ansi \
+                --preview 'test -d {} && eza -lFh --icons --color=always --group-directories-first --git --no-permissions --no-user --no-filesize --no-time {} || bat -f {}' \
+        )"
+
+        local ret="${?}"
+
+        zle reset-prompt
+
+        if [ "${ret}" -eq 0 -a -n "${file}" ]; then
+            LBUFFER="${LBUFFER}${(q)file}"
+        fi
+    }
+
+    zle -N _r9e_search_file_widget _r9e_search_file
+
+    bindkey '^ ' _r9e_search_file_widget
+fi
