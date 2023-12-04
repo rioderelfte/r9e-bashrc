@@ -1,3 +1,8 @@
+> [!CAUTION]
+> This repository is no longer maintained. Feel free to fork this repository or
+> use parts of it in your own shell rc. Below is the original README for
+> reference.
+
 This is my personal Bash and ZSH rc. It is currently used on different Linux
 flavors (mainly Fedora, Debian and Gentoo) and on Mac OS X. It might work on
 other platforms. If you encounter any problems on your platform, feel free to
